@@ -13,6 +13,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class SecurityConfig {
 	
+	@Autowired
+	private BoardUserDetailsService boardUserDetailService;
+	
+	
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
 		
@@ -29,6 +33,8 @@ public class SecurityConfig {
 				.logout(logout -> {logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 										.invalidateHttpSession(true).logoutSuccessUrl("/");})
 				.exceptionHandling(exception -> exception.accessDeniedPage("/accessDenied"));
+		
+		security.userDetailsService(boardUserDetailService);
 		
 		return security.build();
 	}

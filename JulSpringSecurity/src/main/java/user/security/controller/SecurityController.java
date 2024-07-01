@@ -1,7 +1,10 @@
 package user.security.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import user.security.config.SecurityUser;
 
 @Controller
 public class SecurityController {
@@ -22,7 +25,9 @@ public class SecurityController {
 	}
 	
 	@GetMapping("/admin")
-	public void forAdmin() {
+	public void forAdmin(@AuthenticationPrincipal SecurityUser users ) {
+		System.out.println("로그인한 아이디: "+ users.getUsers().getId());
+		System.out.println("로그인한 아이디: " + users.getUsername());
 		System.out.println("admin");
 	}
 	
